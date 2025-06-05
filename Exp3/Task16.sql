@@ -7,37 +7,37 @@
 SELECT DISTINCT
     a.pro_c_id AS c_id1,
     b.pro_c_id AS c_id2
-FROM finance.property a
-CROSS JOIN finance.property b
+FROM property a
+         CROSS JOIN property b
 WHERE a.pro_type=3 AND
-      b.pro_type=3 AND
-      a.pro_c_id<b.pro_c_id AND
-      NOT EXISTS(
-          SELECT *
-          FROM finance.property a1
-          WHERE a1.pro_type=3 AND
-                a1.pro_c_id=a.pro_c_id AND
-                NOT EXISTS(
-                    SELECT *
-                    FROM finance.property b1
-                    WHERE b1.pro_type=3 AND
-                          b1.pro_c_id=b.pro_c_id AND
-                          b1.pro_pif_id=a1.pro_pif_id
-                )
-      )AND
-      NOT EXISTS(
-          SELECT *
-          FROM finance.property b2
-          WHERE b2.pro_type=3 AND
-                b2.pro_c_id=b.pro_c_id AND
-                NOT EXISTS(
-                    SELECT *
-                    FROM finance.property a2
-                    WHERE a2.pro_type=3 AND
-                          a2.pro_c_id=a.pro_c_id AND
-                          a2.pro_pif_id=b2.pro_pif_id
-                )
-      );
+    b.pro_type=3 AND
+    a.pro_c_id<b.pro_c_id AND
+    NOT EXISTS(
+        SELECT *
+        FROM property a1
+        WHERE a1.pro_type=3 AND
+            a1.pro_c_id=a.pro_c_id AND
+            NOT EXISTS(
+                SELECT *
+                FROM property b1
+                WHERE b1.pro_type=3 AND
+                    b1.pro_c_id=b.pro_c_id AND
+                    b1.pro_pif_id=a1.pro_pif_id
+            )
+    )AND
+    NOT EXISTS(
+        SELECT *
+        FROM property b2
+        WHERE b2.pro_type=3 AND
+            b2.pro_c_id=b.pro_c_id AND
+            NOT EXISTS(
+                SELECT *
+                FROM property a2
+                WHERE a2.pro_type=3 AND
+                    a2.pro_c_id=a.pro_c_id AND
+                    a2.pro_pif_id=b2.pro_pif_id
+            )
+    );
 
 
 

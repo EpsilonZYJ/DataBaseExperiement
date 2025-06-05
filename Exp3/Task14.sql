@@ -4,11 +4,11 @@
 -- 请用一条SQL语句实现该查询：
 
 SELECT i_id, i_amount
-FROM finance.insurance, (
+FROM insurance, (
     SELECT DISTINCT i_amount AS ii_amount
-    FROM finance.insurance
+    FROM insurance
     ORDER BY insurance.i_amount DESC
-    LIMIT 1 OFFSET 3
+        LIMIT 1 OFFSET 3
 ) AS amount_table
 WHERE insurance.i_amount=amount_table.ii_amount;
 

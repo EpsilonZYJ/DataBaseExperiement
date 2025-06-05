@@ -2,19 +2,19 @@
 --   请用一条SQL语句实现该查询：
 
 
+
 SELECT c_name, c_phone, c_mail
-FROM finance.client
+FROM client
 WHERE c_id IN(
     SELECT pro_c_id
-    FROM finance.property
+    FROM property
     WHERE pro_type=3
-    AND pro_pif_id IN(
+      AND pro_pif_id IN(
         SELECT f_id
-        FROM finance.fund
+        FROM fund
         WHERE f_type='货币型'
-        )
+    )
 ) ORDER BY c_id;
-
 
 
 

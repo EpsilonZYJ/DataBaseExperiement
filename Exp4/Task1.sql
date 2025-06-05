@@ -11,12 +11,12 @@ FROM
         SELECT
             YEAR(pro_purchase_time) AS pyear,
             RANK() OVER (PARTITION BY YEAR(pro_purchase_time)
-                ORDER BY SUM(property.pro_quantity) DESC) AS rk,
+            ORDER BY SUM(finances_product.p_amount*property.pro_quantity) DESC) AS rk,
             p_id,
             SUM(finances_product.p_amount*property.pro_quantity) sumamount
         FROM
-            finance.finances_product,
-            finance.property
+            finances_product,
+            property
         WHERE
             pro_type=1 AND
             YEAR(pro_purchase_time) IN (2010, 2011) AND

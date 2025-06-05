@@ -21,8 +21,8 @@ FROM
             DENSE_RANK() OVER(PARTITION BY p1.pro_c_id
                 ORDER BY COUNT(DISTINCT p1.pro_c_id) DESC, p2.pro_c_id ASC) AS crank
         FROM
-            finance.property AS p1,
-            finance.property AS p2
+            property AS p1,
+            property AS p2
         WHERE
             p1.pro_type=1 AND
             p2.pro_type=1 AND

@@ -6,6 +6,7 @@
 --               4
 --   请用一条SQL语句实现该查询：
 
+
 SELECT
     week_of_trading,
     SUM(IF(dfw=2, total_amount, NULL)) Monday,
@@ -18,7 +19,7 @@ FROM(
             WEEK(pro_purchase_time)-WEEK('2022-02-01') week_of_trading,
             DAYOFWEEK(pro_purchase_time) dfw,
             SUM(pro_quantity*f_amount) AS total_amount
-        FROM finance.property, finance.fund
+        FROM property, fund
         WHERE
             property.pro_pif_id=fund.f_id AND
             property.pro_type=3 AND
@@ -26,7 +27,6 @@ FROM(
         GROUP BY pro_purchase_time
     ) table1
 GROUP BY week_of_trading;
-
 
 
 

@@ -5,17 +5,17 @@
 SELECT
     b_c_id,
     SUM(b_balance) AS credit_card_amount
-FROM finance.bank_card
+FROM bank_card
 WHERE
     b_type='信用卡' AND
     b_c_id IN
     (
         SELECT b_c_id
-        FROM finance.bank_card
+        FROM bank_card
         WHERE
             b_type='信用卡' AND
             b_balance >= 5000
-        )
+    )
 GROUP BY b_c_id
 ORDER BY b_c_id;
 

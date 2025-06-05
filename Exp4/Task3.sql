@@ -4,7 +4,7 @@
 
 
 SELECT DISTINCT pro_c_id
-FROM finance.property AS p_query
+FROM property AS p_query
 WHERE
     pro_type=1 AND
     NOT EXISTS(
@@ -12,7 +12,7 @@ WHERE
         FROM
             (
                 SELECT pro_pif_id
-                FROM finance.property
+                FROM property
                 WHERE pro_type=1
                 GROUP BY pro_pif_id
                 HAVING COUNT(DISTINCT pro_c_id)>2
@@ -20,7 +20,7 @@ WHERE
         WHERE pro_pif_id NOT IN
               (
                   SELECT pro_pif_id
-                  FROM finance.property AS p_tmp
+                  FROM property AS p_tmp
                   WHERE
                       pro_type=1 AND
                       p_tmp.pro_c_id=p_query.pro_c_id

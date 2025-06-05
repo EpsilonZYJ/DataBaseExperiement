@@ -13,7 +13,8 @@ FROM(
                 FROM property, fund
                 WHERE
                     property.pro_pif_id=fund.f_id AND
-                    property.pro_type=3
+                    property.pro_type=3 AND
+                    MONTH(pro_purchase_time)=2
                 GROUP BY pro_purchase_time
             ) table1
         WHERE

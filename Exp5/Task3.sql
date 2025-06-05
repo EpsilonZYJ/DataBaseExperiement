@@ -10,7 +10,7 @@ WHERE
     w_type=2
 GROUP BY c_id
 ORDER BY total_salary DESC
-LIMIT 3;
+    LIMIT 3;
 
 
 /* end of you code */

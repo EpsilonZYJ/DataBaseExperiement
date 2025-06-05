@@ -5,14 +5,14 @@ SELECT DISTINCT table1.pro_c_id AS pro_c_id
 FROM
     (
         SELECT pro_c_id, COUNT(DISTINCT pro_pif_id) AS ptype_num
-        FROM finance.property
+        FROM property
         WHERE property.pro_type=1
         GROUP BY pro_c_id
     )table1
-    LEFT OUTER JOIN
+        LEFT OUTER JOIN
     (
         SELECT pro_c_id, COUNT(DISTINCT pro_pif_id) AS ftype_num
-        FROM finance.property
+        FROM property
         WHERE property.pro_type=3
         GROUP BY pro_c_id
     )table2

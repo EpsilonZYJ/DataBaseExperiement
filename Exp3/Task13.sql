@@ -9,57 +9,57 @@ SELECT
     c_id, c_name,
     IFNULL(SUM(tt_sum), 0) + IFNULL(SUM(balance_sum), 0)
         - IFNULL(SUM(over_sum), 0) + IFNULL(SUM(income_sum), 0) AS total_property
-FROM finance.client
-LEFT OUTER JOIN
+FROM client
+         LEFT OUTER JOIN
      (
          SELECT pro_c_id, SUM(t_sum) AS tt_sum
          FROM
              (
                  SELECT pro_c_id, SUM(pro_quantity*f_amount) AS t_sum
-                 FROM finance.fund, finance.property
+                 FROM fund, property
                  WHERE fund.f_id=property.pro_pif_id AND property.pro_type=3
                  GROUP BY pro_c_id
 
                  UNION ALL
 
                  SELECT pro_c_id, SUM(pro_quantity*i_amount) AS t_sum
-                 FROM finance.insurance, finance.property
+                 FROM insurance, property
                  WHERE insurance.i_id=property.pro_pif_id AND property.pro_type=2
                  GROUP BY pro_c_id
 
                  UNION ALL
 
                  SELECT pro_c_id, SUM(pro_quantity*p_amount) AS t_sum
-                 FROM finance.finances_product, finance.property
+                 FROM finances_product, property
                  WHERE finances_product.p_id=property.pro_pif_id AND property.pro_type=1
                  GROUP BY pro_c_id
              ) AS tt_table
          GROUP BY pro_c_id
      ) t_table
      ON t_table.pro_c_id=client.c_id
-LEFT OUTER JOIN
-    (
-        SELECT b_c_id, SUM(b_balance) AS balance_sum
-        FROM finance.bank_card
-        WHERE b_type='储蓄卡'
-        GROUP BY b_c_id
-    ) balance_table
-    ON balance_table.b_c_id=client.c_id
-LEFT OUTER JOIN
-    (
-        SELECT b_c_id, SUM(b_balance) AS over_sum
-        FROM finance.bank_card
-        WHERE  b_type='信用卡'
-        GROUP BY b_c_id
-    ) over_table
-    ON over_table.b_c_id=client.c_id
-LEFT OUTER JOIN
-    (
-        SELECT pro_c_id, SUM(pro_income) AS income_sum
-        FROM finance.property
-        GROUP BY pro_c_id
-    ) income_table
-    ON income_table.pro_c_id=client.c_id
+         LEFT OUTER JOIN
+     (
+         SELECT b_c_id, SUM(b_balance) AS balance_sum
+         FROM bank_card
+         WHERE b_type='储蓄卡'
+         GROUP BY b_c_id
+     ) balance_table
+     ON balance_table.b_c_id=client.c_id
+         LEFT OUTER JOIN
+     (
+         SELECT b_c_id, SUM(b_balance) AS over_sum
+         FROM bank_card
+         WHERE b_type='信用卡'
+         GROUP BY b_c_id
+     ) over_table
+     ON over_table.b_c_id=client.c_id
+         LEFT OUTER JOIN
+     (
+         SELECT pro_c_id, SUM(pro_income) AS income_sum
+         FROM property
+         GROUP BY pro_c_id
+     ) income_table
+     ON income_table.pro_c_id=client.c_id
 GROUP BY c_id;
 
 

@@ -5,12 +5,12 @@ SELECT
     SUM(w_amount) AS total_salary
 FROM
     client AS c
-    JOIN wage AS w ON c.c_id=w.w_c_id
+        JOIN wage AS w ON c.c_id=w.w_c_id
 WHERE
     w.w_type=2
 GROUP BY w.w_org
 ORDER BY total_salary DESC
-LIMIT 3;
+    LIMIT 3;
 
 
 /* end of you code */

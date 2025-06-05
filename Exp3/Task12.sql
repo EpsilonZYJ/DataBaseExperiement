@@ -5,26 +5,26 @@
 --     查询结果按总金额降序排序。
 -- 请用一条SQL语句实现该查询：
 SELECT c_name, c_id_card, IFNULL(SUM(t_sum), 0) AS total_amount
-FROM finance.client
-LEFT OUTER JOIN
-    (
-        SELECT pro_c_id, pro_quantity*f_amount AS t_sum
-        FROM finance.fund, finance.property
-        WHERE fund.f_id=property.pro_pif_id AND property.pro_type=3
+FROM client
+         LEFT OUTER JOIN
+     (
+         SELECT pro_c_id, pro_quantity*f_amount AS t_sum
+         FROM fund, property
+         WHERE fund.f_id=property.pro_pif_id AND property.pro_type=3
 
-        UNION ALL
+         UNION ALL
 
-        SELECT pro_c_id, pro_quantity*i_amount AS t_sum
-        FROM finance.insurance, finance.property
-        WHERE insurance.i_id=property.pro_pif_id AND property.pro_type=2
+         SELECT pro_c_id, pro_quantity*i_amount AS t_sum
+         FROM insurance, property
+         WHERE insurance.i_id=property.pro_pif_id AND property.pro_type=2
 
-        UNION ALL
+         UNION ALL
 
-        SELECT pro_c_id, pro_quantity*p_amount AS t_sum
-        FROM finance.finances_product, finance.property
-        WHERE finances_product.p_id=property.pro_pif_id AND property.pro_type=1
-    ) t_table
-    ON t_table.pro_c_id=client.c_id
+         SELECT pro_c_id, pro_quantity*p_amount AS t_sum
+         FROM finances_product, property
+         WHERE finances_product.p_id=property.pro_pif_id AND property.pro_type=1
+     ) t_table
+     ON t_table.pro_c_id=client.c_id
 GROUP BY c_id
 ORDER BY total_amount DESC;
 

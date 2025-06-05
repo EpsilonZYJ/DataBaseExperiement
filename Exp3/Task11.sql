@@ -3,18 +3,17 @@
 -- 请用一条SQL语句实现该查询：
 
 
+
 SELECT
     c_id,
     c_name,
     COUNT(b_number) AS number_of_cards
-FROM finance.client LEFT OUTER JOIN finance.bank_card
-    on client.c_id=bank_card.b_c_id
+FROM client LEFT OUTER JOIN bank_card
+                            on client.c_id=bank_card.b_c_id
 WHERE c_name LIKE '黄%'
 GROUP BY c_id
 ORDER BY number_of_cards DESC,
          c_id ASC;
-
-
 
 
 
